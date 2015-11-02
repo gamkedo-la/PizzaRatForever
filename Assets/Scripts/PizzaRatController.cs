@@ -54,9 +54,36 @@ public class PizzaRatController : MonoBehaviour {
 		Debug.Log ("Pizza Grabbed!");
 		grabPoint.transform.position = grabPoint.transform.position + (transform.forward * 1.0f);
 
-		print (rb.velocity);
+		if (detectPizza())
+		{
+			Debug.Log("pizza has been located!");
+		}
+		else
+		{
+			Debug.Log ("pizza not located!");
+		}
+			;
 
 		//pizza.GetComponent<Rigidbody>().AddForce(rb.velocity);
+
+	}
+
+	bool detectPizza(){
+
+		Collider[] hitColliders = Physics.OverlapSphere(grabPoint.transform.position, 1.0f);
+
+		bool found = false;
+
+		foreach (Collider col in hitColliders)
+		{
+			if (col.gameObject.CompareTag("Pizza"))
+			{
+				found = true;
+			}
+
+		}
+
+		return found;
 
 	}
 
