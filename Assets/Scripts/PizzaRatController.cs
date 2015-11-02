@@ -30,7 +30,7 @@ public class PizzaRatController : MonoBehaviour {
 		float rotation = Input.GetAxis ("Horizontal") * rotationSpeed;
 		
 		transform.Rotate (0, rotation, 0);
-		transform.Translate(-moveForward, 0, 0);
+		transform.Translate(0, 0, moveForward);
 
 		if (Input.GetButtonDown ("Fire3")){
 
@@ -52,7 +52,7 @@ public class PizzaRatController : MonoBehaviour {
 	void grabPizza(){
 
 		Debug.Log ("Pizza Grabbed!");
-		grabPoint.transform.position = grabPoint.transform.position + (transform.right * -1.0f);
+		grabPoint.transform.position = grabPoint.transform.position + (transform.forward * 1.0f);
 
 		print (rb.velocity);
 
@@ -64,7 +64,7 @@ public class PizzaRatController : MonoBehaviour {
 	void ungrabPizza(){
 		
 		Debug.Log ("Pizza unGrabbed!");
-		grabPoint.transform.position = grabPoint.transform.position + (transform.right * 1.0f);  
+		grabPoint.transform.position = grabPoint.transform.position + (transform.forward * -1.0f);  
 		
 	}
 
