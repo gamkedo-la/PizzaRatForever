@@ -5,6 +5,7 @@ public class PizzaRatController : MonoBehaviour {
 
 	public float movementSpeed;
 	public float rotationSpeed;
+	public float pizzaForceMultiplier;
 
 	public GameObject grabPoint;
 	public GameObject pizza;
@@ -57,14 +58,24 @@ public class PizzaRatController : MonoBehaviour {
 		if (detectPizza())
 		{
 			Debug.Log("pizza has been located!");
+			dragPizza();
 		}
 		else
 		{
 			Debug.Log ("pizza not located!");
 		}
-			;
+			
 
 		//pizza.GetComponent<Rigidbody>().AddForce(rb.velocity);
+
+	}
+
+	void dragPizza(){
+
+		Vector3 pizzaVector = (originalGrabPoint - pizza.transform.position) * pizzaForceMultiplier; //first, find the right direction to drag
+		Debug.Log (pizzaVector);
+
+		pizza.GetComponent<Rigidbody>().AddForceAtPosition(pizzaVector, grabPoint.transform.position); //then apply the force to the grabbed part of the pizza
 
 	}
 
