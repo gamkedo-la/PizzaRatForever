@@ -9,15 +9,18 @@ public class PizzaRatController : MonoBehaviour {
 
 	public GameObject grabPoint;
 	public GameObject pizza;
+
 	
 	private Rigidbody rb;
 	private Vector3 originalGrabPoint;
+	private bool dragging;
 
 
 	// Use this for initialization
 	void Start () {
 
 		rb = GetComponent<Rigidbody>(); 
+		dragging = false;
 	
 	}
 
@@ -29,6 +32,15 @@ public class PizzaRatController : MonoBehaviour {
 		
 		float moveForward = Input.GetAxis("Vertical") * movementSpeed;
 		float rotation = Input.GetAxis ("Horizontal") * rotationSpeed;
+
+		if(dragging) {
+			dragPizza();
+			if(moveForward > 0.0f) { // disallow pushing of pizza, that's cheating!
+				moveForward = 0.0f;
+			} else {
+				moveForward *= 0.15f; // decrease reverse speed when dragging
+			}
+		}
 		
 		transform.Rotate (0, rotation, 0);
 		transform.Translate(0, 0, moveForward);
@@ -52,13 +64,16 @@ public class PizzaRatController : MonoBehaviour {
 	//extend GrabPoint in order to grab onto pizza
 	void grabPizza(){
 
-		Debug.Log ("Pizza Grabbed!");
 		grabPoint.transform.position = grabPoint.transform.position + (transform.forward * 1.0f);
 
 		if (detectPizza())
 		{
 			Debug.Log("pizza has been located!");
-			dragPizza();
+			//dragPizza();
+
+			dragging = true;
+			grabPoint.transform.parent = pizza.transform; //attach grabPoint to pizza
+
 		}
 		else
 		{
@@ -72,7 +87,7 @@ public class PizzaRatController : MonoBehaviour {
 
 	void dragPizza(){
 
-		Vector3 pizzaVector = (originalGrabPoint - pizza.transform.position) * pizzaForceMultiplier; //first, find the right direction to drag
+		Vector3 pizzaVector = (transform.position - pizza.transform.position) * pizzaForceMultiplier; //first, find the right direction to drag
 		Debug.Log (pizzaVector);
 
 		pizza.GetComponent<Rigidbody>().AddForceAtPosition(pizzaVector, grabPoint.transform.position); //then apply the force to the grabbed part of the pizza
@@ -100,9 +115,15 @@ public class PizzaRatController : MonoBehaviour {
 
 	//simply reverse the grab
 	void ungrabPizza(){
-		
+
+		dragging = false;
 		Debug.Log ("Pizza unGrabbed!");
-		grabPoint.transform.position = grabPoint.transform.position + (transform.forward * -1.0f);  
+
+		grabPoint.transform.parent = transform; // retract to mouse
+		grabPoint.transform.position = transform.position + transform.forward;  
+
+
+		//grabPoint.transform.position = grabPoint.transform.position + (transform.forward * -1.0f);  
 		
 	}
 
