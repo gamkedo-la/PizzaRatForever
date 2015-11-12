@@ -7,6 +7,8 @@ public class ShoeController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+		Destroy(gameObject, 5.0f); //self-destruct just in case
 	
 	}
 	
