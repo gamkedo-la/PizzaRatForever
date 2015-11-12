@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class PizzaRatController : MonoBehaviour {
@@ -10,6 +11,7 @@ public class PizzaRatController : MonoBehaviour {
 	public GameObject grabPoint;
 	public GameObject pizza;
 
+	public static Text debugTextOut;
 	
 	private Rigidbody rb;
 	private Vector3 originalGrabPoint;
@@ -21,6 +23,8 @@ public class PizzaRatController : MonoBehaviour {
 
 		rb = GetComponent<Rigidbody>(); 
 		dragging = false;
+
+		debugTextOut = GameObject.Find ("DebugText").GetComponent<Text>();
 	
 	}
 
@@ -68,7 +72,7 @@ public class PizzaRatController : MonoBehaviour {
 
 		if (detectPizza())
 		{
-			Debug.Log("pizza has been located!");
+			// Debug.Log("pizza has been located!");
 			//dragPizza();
 
 			dragging = true;
@@ -77,7 +81,7 @@ public class PizzaRatController : MonoBehaviour {
 		}
 		else
 		{
-			Debug.Log ("pizza not located!");
+			// Debug.Log ("pizza not located!");
 		}
 			
 
@@ -88,7 +92,7 @@ public class PizzaRatController : MonoBehaviour {
 	void dragPizza(){
 
 		Vector3 pizzaVector = (transform.position - pizza.transform.position) * pizzaForceMultiplier; //first, find the right direction to drag
-		Debug.Log (pizzaVector);
+		// Debug.Log (pizzaVector);
 
 		pizza.GetComponent<Rigidbody>().AddForceAtPosition(pizzaVector, grabPoint.transform.position); //then apply the force to the grabbed part of the pizza
 
@@ -117,7 +121,7 @@ public class PizzaRatController : MonoBehaviour {
 	void ungrabPizza(){
 
 		dragging = false;
-		Debug.Log ("Pizza unGrabbed!");
+		// Debug.Log ("Pizza unGrabbed!");
 
 		grabPoint.transform.parent = transform; // retract to mouse
 		grabPoint.transform.position = transform.position + transform.forward;  
