@@ -1,15 +1,29 @@
 fileFormatVersion: 2
-guid: 4578abfb3c8d94de49761213cd34e976
-timeCreated: 1446606947
+guid: f7f027cfa024847a78d1b7b7bd0ce5d2
+timeCreated: 1447827894
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
+    100000: CrudePizza
+    100002: CrudeRat
+    100004: pCylinder1
+    100006: //RootNode
+    400000: CrudePizza
+    400002: CrudeRat
+    400004: pCylinder1
+    400006: //RootNode
+    2300000: CrudePizza
+    2300002: CrudeRat
+    2300004: pCylinder1
+    3300000: CrudePizza
+    3300002: CrudeRat
+    3300004: pCylinder1
     4300000: CrudeRat
+    4300002: CrudePizza
+    4300004: pCylinder1
+    7400000: Take 001
+    9500000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
@@ -66,8 +80,10 @@ ModelImporter:
     legStretch: .0500000007
     feetSpacing: 0
     rootMotionBoneName: 
+    hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
+  humanoidOversampling: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

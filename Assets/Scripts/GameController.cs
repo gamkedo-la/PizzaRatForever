@@ -33,8 +33,8 @@ public class GameController : MonoBehaviour {
 		floorWidth = subwayFloor.transform.localScale.x / 2;
 		floorHeight = subwayFloor.transform.localScale.y / 2;
 
-		Debug.Log (floorWidth);
-		Debug.Log (floorHeight);
+		// Debug.Log (floorWidth);
+		// Debug.Log (floorHeight);
 
 		PlacePizza();
 
@@ -44,6 +44,7 @@ public class GameController : MonoBehaviour {
 
 		score++;
 		scoreTextOut.text = "Score: " + score;
+		pizzaRat.grabPoint.transform.parent = pizzaRat.transform;
 		PlacePizza();
 
 	}

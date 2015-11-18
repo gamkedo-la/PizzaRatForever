@@ -91,13 +91,13 @@ public class PizzaRatController : MonoBehaviour {
 
 	void dragPizza(){
 
-		Debug.Log ("words");
+		//Debug.Log ("words");
 
 		Vector3 pizzaVector = (transform.position - pizza.transform.position) * pizzaForceMultiplier; //first, find the right direction to drag
 		// Debug.Log (pizzaVector);
 
 		if(pizza != null){
-		pizza.GetComponent<Rigidbody>().AddForceAtPosition(pizzaVector, grabPoint.transform.position); //then apply the force to the grabbed part of the pizza
+			pizza.GetComponent<Rigidbody>().AddForceAtPosition(pizzaVector, grabPoint.transform.position); //then apply the force to the grabbed part of the pizza
 		}
 	}
 
