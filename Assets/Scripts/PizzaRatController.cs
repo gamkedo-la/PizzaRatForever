@@ -9,9 +9,9 @@ public class PizzaRatController : MonoBehaviour {
 	public float pizzaForceMultiplier;
 
 	public GameObject grabPoint;
-	public GameObject pizza;
+	private GameObject pizza = null;
 
-	public static Text debugTextOut;
+
 	
 	private Rigidbody rb;
 	private Vector3 originalGrabPoint;
@@ -23,8 +23,6 @@ public class PizzaRatController : MonoBehaviour {
 
 		rb = GetComponent<Rigidbody>(); 
 		dragging = false;
-
-		debugTextOut = GameObject.Find ("DebugText").GetComponent<Text>();
 	
 	}
 
@@ -37,7 +35,7 @@ public class PizzaRatController : MonoBehaviour {
 		float moveForward = Input.GetAxis("Vertical") * movementSpeed;
 		float rotation = Input.GetAxis ("Horizontal") * rotationSpeed;
 
-		if(dragging) {
+		if(dragging && pizza != null) {
 			dragPizza();
 			if(moveForward > 0.0f) { // disallow pushing of pizza, that's cheating!
 				moveForward = 0.0f;
@@ -49,19 +47,21 @@ public class PizzaRatController : MonoBehaviour {
 		transform.Rotate (0, rotation, 0);
 		transform.Translate(0, 0, moveForward);
 
-		if (Input.GetButtonDown ("Fire3")){
-
-			grabPizza();
-			
+		if (pizza != null){
+			if (Input.GetButtonDown ("Fire3")){
+				grabPizza();
+			}
+	
+			if (Input.GetButtonUp("Fire3")){
+				ungrabPizza(); //if grab button not down, snap back to original spot
+			}
+		
 		}
+	}
 
-
-		if (Input.GetButtonUp("Fire3"))
-		{
-
-			ungrabPizza(); //if grab button not down, snap back to original spot
-
-		}
+	public void AssignPizza(GameObject pizzaRef){
+		
+		pizza = pizzaRef;
 		
 	}
 
@@ -91,11 +91,14 @@ public class PizzaRatController : MonoBehaviour {
 
 	void dragPizza(){
 
+		Debug.Log ("words");
+
 		Vector3 pizzaVector = (transform.position - pizza.transform.position) * pizzaForceMultiplier; //first, find the right direction to drag
 		// Debug.Log (pizzaVector);
 
+		if(pizza != null){
 		pizza.GetComponent<Rigidbody>().AddForceAtPosition(pizzaVector, grabPoint.transform.position); //then apply the force to the grabbed part of the pizza
-
+		}
 	}
 
 	bool detectPizza(){
