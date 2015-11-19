@@ -44,7 +44,7 @@ public class GameController : MonoBehaviour {
 
 		score++;
 		scoreTextOut.text = "Score: " + score;
-		pizzaRat.grabPoint.transform.parent = pizzaRat.transform;
+		pizzaRat.ungrabPizza();
 		PlacePizza();
 
 	}

@@ -121,7 +121,7 @@ public class PizzaRatController : MonoBehaviour {
 	}
 
 	//simply reverse the grab
-	void ungrabPizza(){
+	public void ungrabPizza(){
 
 		dragging = false;
 		// Debug.Log ("Pizza unGrabbed!");
