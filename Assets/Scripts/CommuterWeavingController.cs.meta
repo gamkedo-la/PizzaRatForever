@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: ae998cfe91ff247e9a1061279b58ffe3
+timeCreated: 1447871725
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - shoePrefab: {fileID: 136754, guid: afa42c97ce62047db84beca373f15c56, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

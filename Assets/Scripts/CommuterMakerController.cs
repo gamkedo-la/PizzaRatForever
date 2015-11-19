@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CommuterMakerController : MonoBehaviour {
 
 	public GameObject subwayFloor;
-	public GameObject commuter;
+	public GameObject[] commuter; // types of commuters
+	public int numCommuterTypes; // length of commuter array
+	public int type;
+	//public GameObject[] commuterType;
 
 	public float floorWidth;
 	public float floorHeight;
@@ -20,7 +24,10 @@ public class CommuterMakerController : MonoBehaviour {
 		floorWidth = subwayFloor.transform.localScale.x / 2;
 		floorHeight = subwayFloor.transform.localScale.y / 2;
 
+		numCommuterTypes = commuter.Length;
+
 		StartCoroutine (teleportAndSpawn());
+		
 	}
 
 	IEnumerator teleportAndSpawn(){
@@ -34,7 +41,9 @@ public class CommuterMakerController : MonoBehaviour {
 			//pick a starting position along the floor's edge
 			pickCommuterPosition();
 
-			GameObject newCommuter = Instantiate(commuter, transform.position, transform.rotation) as GameObject;
+			type = Random.Range (0, (commuter.Length));
+			//commuter = commuterType[type];
+			GameObject newCommuter = Instantiate(commuter[type], transform.position, transform.rotation) as GameObject;
 
 		}
 	}
