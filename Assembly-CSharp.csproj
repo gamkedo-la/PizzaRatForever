@@ -48,6 +48,7 @@
      <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\CommuterController.cs" />
      <Compile Include="Assets\Scripts\CommuterMakerController.cs" />
+     <Compile Include="Assets\Scripts\CommuterWeavingController.cs" />
      <Compile Include="Assets\Scripts\EscToQuit.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />
      <Compile Include="Assets\Scripts\PizzaRatController.cs" />

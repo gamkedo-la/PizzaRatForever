@@ -10,6 +10,8 @@ public class GameController : MonoBehaviour {
 	public GameObject pizzaPrefab;
 	public GameObject subwayFloor;
 
+	public float pizzaPlacementRadius = 10.0f; //how far should the pizza be away from the rat?
+
 	public float floorWidth;
 	public float floorHeight;
 
@@ -33,8 +35,6 @@ public class GameController : MonoBehaviour {
 		floorWidth = subwayFloor.transform.localScale.x / 2;
 		floorHeight = subwayFloor.transform.localScale.y / 2;
 
-		// Debug.Log (floorWidth);
-		// Debug.Log (floorHeight);
 
 		PlacePizza();
 
@@ -53,14 +53,6 @@ public class GameController : MonoBehaviour {
 
 	void PlacePizza(){
 
-		//bool acceptablePosition = false;
-
-		//try the pizza in a different spot
-
-		//GameObject newPizza = Instantiate(pizza) as GameObject;
-
-		//Debug.Log (RandomSpot());
-
 		Vector3 newPosition = RandomSpot();
 
 		GameObject newPizza = Instantiate(pizzaPrefab) as GameObject;
@@ -71,14 +63,28 @@ public class GameController : MonoBehaviour {
 
 	}
 
-	//return a random location on the subway floor
+	//return a random location on the subway floor that is not within a certain radius from the rat
 	Vector3 RandomSpot(){
 
-		//Debug.Log ("words");
-		float randomX = Random.Range (-floorWidth, floorWidth);
-		float randomZ = Random.Range (-floorHeight, floorHeight);
+		bool acceptable = false;
+		Vector3 newPos = new Vector3();
 
-		Vector3 newPos = new Vector3(randomX, pizzaRat.transform.position.y+0.5f,randomZ);
+		while(!acceptable){
+
+			float randomX = Random.Range (-floorWidth, floorWidth);
+			float randomZ = Random.Range (-floorHeight, floorHeight);
+
+			newPos = new Vector3(randomX, pizzaRat.transform.position.y+0.5f,randomZ);
+
+			//check distance from pizzaRat
+			if (Vector3.Distance(newPos, pizzaRat.transform.position) >= pizzaPlacementRadius){
+				Debug.Log(Vector3.Distance(newPos, pizzaRat.transform.position));
+				acceptable = true;
+			}
+
+
+		}
+	
 		return newPos;
 
 	}
