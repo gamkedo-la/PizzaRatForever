@@ -22,13 +22,13 @@ public class ShoeController : MonoBehaviour {
 		if (col.gameObject.CompareTag("Player")){
 
 			 Debug.Log ("Rat squashed!");
-			//PizzaRatController.debugTextOut.text = "Rat Squished!";
+			GameController.instance.GameOver();
 
 		}
 		else if (col.gameObject.CompareTag("Pizza")){
 
 			 Debug.Log ("Pizza stepped on!");
-			//PizzaRatController.debugTextOut.text = "Pizza stepped on!";
+			GameController.instance.PizzaSteppedOn();
 
 		}
 		else{

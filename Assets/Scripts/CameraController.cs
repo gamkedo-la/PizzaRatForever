@@ -16,8 +16,10 @@ public class CameraController : MonoBehaviour {
 	
 	// LateUpdate is called once per frame, after all other items have been processed
 	void LateUpdate () {
-		
-		transform.position = player.transform.position + offset; //moves the camera around, keeping it the correct distance from the player
-		
+
+		if(player != null)
+		{
+			transform.position = player.transform.position + offset; //moves the camera around, keeping it the correct distance from the player
+		}
 	}
 }

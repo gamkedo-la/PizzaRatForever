@@ -17,9 +17,12 @@ public class GameController : MonoBehaviour {
 	public float floorSizeIncrease = 10.0f;
 
 	public Text scoreTextOut;
+	public Text levelTextOut;
+	public Text splashTextOut;
 
 	private int score = 0;
 	private int level = 1; //controls game difficulty
+	private int pepperonis;
 
 
 	// Use this for initialization
@@ -30,6 +33,7 @@ public class GameController : MonoBehaviour {
 		}
 
 		scoreTextOut.text = "Score: 0";
+		levelTextOut.text = "Level: 1";
 
 		instance = this;
 
@@ -49,11 +53,19 @@ public class GameController : MonoBehaviour {
 
 	}
 
+	public void GameOver(){
+
+		splashTextOut.text = "Game Over!";
+		Destroy (pizzaRat.gameObject); //kill the rat
+
+	}
+
 	void LevelUpCheck(){
 
 		if (score % 3 == 0){
 			level++;
-			//DisplayLevelUpText();
+			levelTextOut.text = "Level: " + level;
+			//DisplayLevelUpSplashText();
 			StretchSubwayFloor();
 			pizzaPlacementRadius += 5.0f;
 		}
@@ -61,7 +73,7 @@ public class GameController : MonoBehaviour {
 
 	}
 
-	public void FloorSizeCheck(){
+	void FloorSizeCheck(){
 
 		//figure out where the edges of the floor are.
 		floorWidth = subwayFloor.transform.localScale.x / 2;
@@ -82,10 +94,20 @@ public class GameController : MonoBehaviour {
 		Vector3 newPosition = RandomSpot();
 
 		GameObject newPizza = Instantiate(pizzaPrefab) as GameObject;
+		pepperonis = 3; //each new slice gets 3 pepperonis
 
 		newPizza.transform.position = newPosition;
 		pizzaRat.AssignPizza(newPizza);
 
+
+	}
+
+	public void PizzaSteppedOn(){
+
+		pepperonis--;
+		if (pepperonis == 0){
+			GameOver();
+		}
 
 	}
 
