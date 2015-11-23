@@ -10,14 +10,16 @@ public class GameController : MonoBehaviour {
 	public GameObject pizzaPrefab;
 	public GameObject subwayFloor;
 
-	public float pizzaPlacementRadius = 10.0f; //how far should the pizza be away from the rat?
+	public float pizzaPlacementRadius = 20.0f; //how far should the pizza be away from the rat?
 
 	public float floorWidth;
 	public float floorHeight;
+	public float floorSizeIncrease = 10.0f;
 
 	public Text scoreTextOut;
 
 	private int score = 0;
+	private int level = 1; //controls game difficulty
 
 
 	// Use this for initialization
@@ -31,10 +33,7 @@ public class GameController : MonoBehaviour {
 
 		instance = this;
 
-		//figure out where the edges of the floor are.
-		floorWidth = subwayFloor.transform.localScale.x / 2;
-		floorHeight = subwayFloor.transform.localScale.y / 2;
-
+		FloorSizeCheck();
 
 		PlacePizza();
 
@@ -44,8 +43,35 @@ public class GameController : MonoBehaviour {
 
 		score++;
 		scoreTextOut.text = "Score: " + score;
+		LevelUpCheck();
 		pizzaRat.ungrabPizza();
 		PlacePizza();
+
+	}
+
+	void LevelUpCheck(){
+
+		if (score % 3 == 0){
+			level++;
+			//DisplayLevelUpText();
+			StretchSubwayFloor();
+			pizzaPlacementRadius += 5.0f;
+		}
+
+
+	}
+
+	public void FloorSizeCheck(){
+
+		//figure out where the edges of the floor are.
+		floorWidth = subwayFloor.transform.localScale.x / 2;
+		floorHeight = subwayFloor.transform.localScale.y / 2;
+
+	}
+
+	void StretchSubwayFloor(){
+
+		subwayFloor.transform.localScale += new Vector3(floorSizeIncrease, 0.0f, floorSizeIncrease); //make subway floor 10 units bigger 
 
 	}
 
