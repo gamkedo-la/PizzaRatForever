@@ -19,6 +19,7 @@ public class GameController : MonoBehaviour {
 	public Text scoreTextOut;
 	public Text levelTextOut;
 	public Text splashTextOut;
+	public GameObject gameOverButton;
 
 	private int score = 0;
 	private int level = 1; //controls game difficulty
@@ -34,12 +35,20 @@ public class GameController : MonoBehaviour {
 
 		scoreTextOut.text = "Score: 0";
 		levelTextOut.text = "Level: 1";
+		splashTextOut.text = "";
+		gameOverButton.SetActive(false);
 
 		instance = this;
 
 		FloorSizeCheck();
 
 		PlacePizza();
+
+	}
+
+	public void RestartGame(){
+
+		Application.LoadLevel(Application.loadedLevelName);
 
 	}
 
@@ -57,6 +66,28 @@ public class GameController : MonoBehaviour {
 
 		splashTextOut.text = "Game Over!";
 		Destroy (pizzaRat.gameObject); //kill the rat
+		gameOverButton.SetActive(true);
+
+	}
+
+	//only post if Splash Message is currently empty
+	IEnumerator LevelUpAnnounce(){
+
+		string levelUpWording = "Level Up!";
+
+		if (splashTextOut.text == ""){
+
+			splashTextOut.text = levelUpWording;
+			yield return new WaitForSeconds(2.0f);
+
+			if (splashTextOut.text == levelUpWording){
+
+				splashTextOut.text = "";
+
+			}
+
+		}
+
 
 	}
 
@@ -65,7 +96,7 @@ public class GameController : MonoBehaviour {
 		if (score % 3 == 0){
 			level++;
 			levelTextOut.text = "Level: " + level;
-			//DisplayLevelUpSplashText();
+			StartCoroutine(LevelUpAnnounce());
 			StretchSubwayFloor();
 			pizzaPlacementRadius += 5.0f;
 		}

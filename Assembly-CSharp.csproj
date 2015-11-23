@@ -51,6 +51,7 @@
      <Compile Include="Assets\Scripts\CommuterWeavingController.cs" />
      <Compile Include="Assets\Scripts\EscToQuit.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />
+     <Compile Include="Assets\Scripts\PepperoniManager.cs" />
      <Compile Include="Assets\Scripts\PizzaRatController.cs" />
      <Compile Include="Assets\Scripts\PizzaScoreable.cs" />
      <Compile Include="Assets\Scripts\ShoeController.cs" />

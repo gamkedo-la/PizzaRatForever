@@ -28,7 +28,13 @@ public class ShoeController : MonoBehaviour {
 		else if (col.gameObject.CompareTag("Pizza")){
 
 			 Debug.Log ("Pizza stepped on!");
-			GameController.instance.PizzaSteppedOn();
+			//GameController.instance.PizzaSteppedOn();
+			PepperoniManager pmScript = col.gameObject.GetComponent<PepperoniManager>();
+			bool gameOver = pmScript.RemovePepperoni();
+
+			if (gameOver){
+				GameController.instance.GameOver();
+			}
 
 		}
 		else{
