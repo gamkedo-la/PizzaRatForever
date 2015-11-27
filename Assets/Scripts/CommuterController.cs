@@ -6,7 +6,7 @@ public class CommuterController : MonoBehaviour {
 	public GameObject shoePrefabL;
 	public GameObject shoePrefabR;
 	public float shoeDropPauseTime = 2.0f;
-	//public Camera camera;
+	
 
 	private bool leftFoot;
 
@@ -22,6 +22,7 @@ public class CommuterController : MonoBehaviour {
 		InvokeRepeating("DropShoe", 2.0f, shoeDropPauseTime);
 
 		leftFoot = true;
+	
 
 	}
 		
@@ -29,8 +30,17 @@ public class CommuterController : MonoBehaviour {
 	void Update () {
 
 		walkCommuter();
+
+		if (GameController.instance.inBoundsCheck(this.gameObject) == false)
+		{
+			
+			Destroy(this.gameObject); //commuter has walked out of bounds
+			
+		}
+	
 	
 	}
+	
 
 
 	void FixedUpdate () {

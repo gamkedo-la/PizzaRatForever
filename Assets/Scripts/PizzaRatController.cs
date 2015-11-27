@@ -30,6 +30,13 @@ public class PizzaRatController : MonoBehaviour {
 	//move PizzaRat when buttons are pressed
 	void FixedUpdate(){
 
+		if (GameController.instance.inBoundsCheck(this.gameObject) == false)
+		{
+
+			GameController.instance.GameOver(); //pizza rat cannot leave his subterranian home, on pain of death
+
+		}
+
 		//originalGrabPoint = grabPoint.transform.localPosition; //saving grabPoint's original position for snap-back
 		
 		float moveForward = Input.GetAxis("Vertical") * movementSpeed;

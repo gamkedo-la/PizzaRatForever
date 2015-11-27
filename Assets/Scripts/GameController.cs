@@ -52,6 +52,21 @@ public class GameController : MonoBehaviour {
 
 	}
 
+	public bool inBoundsCheck(GameObject obj){
+
+		bool inBounds = false;
+
+		if ((obj.transform.position.x <= floorWidth && obj.transform.position.x >= -floorWidth) && (obj.transform.position.z <= floorHeight && obj.transform.position.z >= -floorHeight)){
+
+			inBounds = true;
+
+		}
+
+		return inBounds;
+
+	}
+	
+
 	public void ScorePizza(){
 
 		score++;
@@ -115,7 +130,7 @@ public class GameController : MonoBehaviour {
 	void StretchSubwayFloor(){
 
 		subwayFloor.transform.localScale += new Vector3(floorSizeIncrease, 0.0f, floorSizeIncrease); //make subway floor 10 units bigger 
-
+		FloorSizeCheck(); //update floor size variables
 	}
 
 
