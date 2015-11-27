@@ -22,7 +22,7 @@ public class GameController : MonoBehaviour {
 	public GameObject gameOverButton;
 
 	private int score = 0;
-	private int level = 1; //controls game difficulty
+	public int level = 1; //controls game difficulty
 	private int pepperonis;
 
 

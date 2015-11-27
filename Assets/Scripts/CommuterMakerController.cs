@@ -15,7 +15,8 @@ public class CommuterMakerController : MonoBehaviour {
 
 	public string commuterDirection;
 
-
+	public float shortestWait = 10.0f;
+	public float longestWait = 20.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -32,8 +33,11 @@ public class CommuterMakerController : MonoBehaviour {
 
 	IEnumerator teleportAndSpawn(){
 		while (true){
+
+			float shortestAdjustedWait = shortestWait / GameController.instance.level;
+			float longestAdjustedWait = longestWait / GameController.instance.level;
 		
-			yield return new WaitForSeconds(Random.Range (2.3f, 3.5f));
+			yield return new WaitForSeconds(Random.Range (shortestAdjustedWait, longestAdjustedWait));
 
 			//pick left, right, top, or bottom edge of the floor.
 			pickCommuterSide();
