@@ -9,6 +9,10 @@ public class GameController : MonoBehaviour {
 	public PizzaRatController pizzaRat;
 	public GameObject pizzaPrefab;
 	public GameObject subwayFloor;
+	public GameObject subwayWallN;
+	public GameObject subwayWallE;
+	public GameObject subwayWallS;
+	public GameObject subwayWallW;
 
 	public float pizzaPlacementRadius = 20.0f; //how far should the pizza be away from the rat?
 
@@ -53,7 +57,6 @@ public class GameController : MonoBehaviour {
 	}
 
 	public bool inBoundsCheck(GameObject obj){
-
 		bool inBounds = false;
 
 		if ((obj.transform.position.x <= floorWidth && obj.transform.position.x >= -floorWidth) && (obj.transform.position.z <= floorHeight && obj.transform.position.z >= -floorHeight)){
@@ -63,9 +66,30 @@ public class GameController : MonoBehaviour {
 		}
 
 		return inBounds;
-
 	}
-	
+
+	public void forceInBounds(GameObject obj){
+		Vector3 fixedPos = obj.transform.position;
+		float safetyMargin = 4.0f;
+		float widthWithMargin = floorWidth-safetyMargin;
+		float heightWithMargin = floorHeight-safetyMargin;
+
+		if (obj.transform.position.x > widthWithMargin) {
+			fixedPos.x = widthWithMargin;
+		}
+		if(obj.transform.position.x < -widthWithMargin) {
+			fixedPos.x = -widthWithMargin;
+		}
+		if(obj.transform.position.z > heightWithMargin) {
+			fixedPos.z = heightWithMargin;
+		}
+		if(obj.transform.position.z < -heightWithMargin) {
+			fixedPos.z = -heightWithMargin;
+		}
+
+		obj.transform.position = fixedPos;
+	}
+
 
 	public void ScorePizza(){
 
@@ -131,7 +155,21 @@ public class GameController : MonoBehaviour {
 
 	void StretchSubwayFloor(){
 
-		subwayFloor.transform.localScale += new Vector3(floorSizeIncrease, 0.0f, floorSizeIncrease); //make subway floor 10 units bigger 
+		subwayFloor.transform.localScale += new Vector3(floorSizeIncrease, floorSizeIncrease, 0.0f); //make subway floor 10 units bigger 
+
+		// stretch the walls, too
+		subwayWallN.transform.localScale += new Vector3(0.0f, 0.0f, floorSizeIncrease);
+		subwayWallS.transform.localScale += new Vector3(0.0f, 0.0f, floorSizeIncrease);
+		subwayWallE.transform.localScale += new Vector3(0.0f, 0.0f, floorSizeIncrease);
+		subwayWallW.transform.localScale += new Vector3(0.0f, 0.0f, floorSizeIncrease);
+
+		// push walls outward
+		float halfMotion = floorSizeIncrease * 0.5f;
+		subwayWallN.transform.position += new Vector3(0.0f, 0.0f, halfMotion);
+		subwayWallS.transform.position += new Vector3(0.0f, 0.0f, -halfMotion);
+		subwayWallE.transform.position += new Vector3(halfMotion, 0.0f, 0.0f);
+		subwayWallW.transform.position += new Vector3(-halfMotion, 0.0f, 0.0f);;
+
 		FloorSizeCheck(); //update floor size variables
 	}
 
@@ -187,7 +225,9 @@ public class GameController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if(Input.GetKeyDown(KeyCode.T)) {
+			StretchSubwayFloor();
+		}
 	}
 
 }

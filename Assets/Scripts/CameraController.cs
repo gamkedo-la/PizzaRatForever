@@ -36,6 +36,8 @@ public class CameraController : MonoBehaviour {
 			transform.position = driftK * transform.position +
 				(1.0f-driftK) * cameraGoalPos;
 
+			GameController.instance.forceInBounds(this.gameObject);
+
 			if(player.isDead) {
 				transform.LookAt(player.transform.position);
 			}

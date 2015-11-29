@@ -3,6 +3,9 @@ using System.Collections;
 
 public class PizzaScoreable : MonoBehaviour {
 
+	void Update() {
+		GameController.instance.forceInBounds(this.gameObject);
+	}
 
 	void OnTriggerEnter(Collider other){
 

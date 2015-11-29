@@ -46,12 +46,8 @@ public class PizzaRatController : MonoBehaviour {
 			return;
 		}
 
-		if (GameController.instance.inBoundsCheck(this.gameObject) == false)
-		{
-
-			GameController.instance.GameOver(); //pizza rat cannot leave his subterranian home, on pain of death
-
-		}
+		// less harsh than squashing the rat from being out of bounds
+		GameController.instance.forceInBounds(this.gameObject);
 
 		//originalGrabPoint = grabPoint.transform.localPosition; //saving grabPoint's original position for snap-back
 		
