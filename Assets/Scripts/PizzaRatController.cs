@@ -8,18 +8,31 @@ public class PizzaRatController : MonoBehaviour {
 	public float rotationSpeed;
 	public float pizzaForceMultiplier;
 
+	public bool isDead;
+
 	public GameObject grabPoint;
 	private GameObject pizza = null;
 
-
-	
 	private Rigidbody rb;
 	private Vector3 originalGrabPoint;
 	private bool dragging;
 
+	public void Die() {
+		if(isDead) {
+			return;
+		}
+		Vector3 flatScale = transform.localScale;
+		flatScale.y = 0.1f;
+		transform.localScale = flatScale;
+		isDead = true;
+		ungrabPizza();
+		// todo also here: play sound effect for rat dying
+	}
 
 	// Use this for initialization
 	void Start () {
+
+		isDead = false;
 
 		rb = GetComponent<Rigidbody>(); 
 		dragging = false;
@@ -29,6 +42,9 @@ public class PizzaRatController : MonoBehaviour {
 
 	//move PizzaRat when buttons are pressed
 	void FixedUpdate(){
+		if(isDead) {
+			return;
+		}
 
 		if (GameController.instance.inBoundsCheck(this.gameObject) == false)
 		{

@@ -79,10 +79,12 @@ public class GameController : MonoBehaviour {
 
 	public void GameOver(){
 
-		splashTextOut.text = "Game Over!";
-		Destroy (pizzaRat.gameObject); //kill the rat
-		gameOverButton.SetActive(true);
-
+		if(pizzaRat.isDead == false) {
+			Debug.Log ("Rat squashed!");
+			splashTextOut.text = "Squashed!";
+			pizzaRat.Die(); //kill the rat
+			gameOverButton.SetActive(true);
+		}
 	}
 
 	//only post if Splash Message is currently empty

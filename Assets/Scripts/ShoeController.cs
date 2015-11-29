@@ -20,10 +20,7 @@ public class ShoeController : MonoBehaviour {
 	void OnCollisionEnter (Collision col){
 
 		if (col.gameObject.CompareTag("Player")){
-
-			 Debug.Log ("Rat squashed!");
 			GameController.instance.GameOver();
-
 		}
 		else if (col.gameObject.CompareTag("Pizza")){
 
