@@ -8,6 +8,11 @@ public class PizzaRatController : MonoBehaviour {
 	public float rotationSpeed;
 	public float pizzaForceMultiplier;
 
+	// audio properties
+	public AudioClip yesPizzaSound;
+	private AudioSource yesPizzaAudio;
+	private bool yesHasPlayed = false;
+
 	public bool isDead;
 
 	public GameObject grabPoint;
@@ -35,7 +40,10 @@ public class PizzaRatController : MonoBehaviour {
 		isDead = false;
 
 		rb = GetComponent<Rigidbody>(); 
+
 		dragging = false;
+		// get audio components
+		yesPizzaAudio = GetComponent<AudioSource>();
 	
 	}
 
@@ -55,6 +63,11 @@ public class PizzaRatController : MonoBehaviour {
 		float rotation = Input.GetAxis ("Horizontal") * rotationSpeed;
 
 		if(dragging && pizza != null) {
+			if(!yesHasPlayed) { // bool so it plays only once
+				yesPizzaAudio.clip = yesPizzaSound;
+				yesPizzaAudio.Play();
+				yesHasPlayed = true;
+			}
 			dragPizza();
 			if(moveForward > 0.0f) { // disallow pushing of pizza, that's cheating!
 				moveForward = 0.0f;
@@ -69,13 +82,19 @@ public class PizzaRatController : MonoBehaviour {
 		if (pizza != null){
 			if (Input.GetButtonDown ("Fire3")){
 				grabPizza();
+
 			}
 	
 			if (Input.GetButtonUp("Fire3")){
 				ungrabPizza(); //if grab button not down, snap back to original spot
+				yesHasPlayed = false;
+				yesPizzaAudio.Stop ();
 			}
 		
 		}
+
+
+
 	}
 
 	public void AssignPizza(GameObject pizzaRef){

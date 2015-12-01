@@ -29,6 +29,8 @@ public class GameController : MonoBehaviour {
 	public int level = 1; //controls game difficulty
 	private int pepperonis;
 
+	public AudioClip scoreAudio;
+	private AudioSource scoreSource;
 
 	// Use this for initialization
 	void Start () {
@@ -36,7 +38,7 @@ public class GameController : MonoBehaviour {
 		if (instance){
 			Destroy(instance);
 		}
-
+		scoreSource = GetComponent<AudioSource>();
 		scoreTextOut.text = "Score: 0";
 		levelTextOut.text = "Level: 1";
 		splashTextOut.text = "";
@@ -92,6 +94,8 @@ public class GameController : MonoBehaviour {
 
 
 	public void ScorePizza(){
+		scoreSource.clip = scoreAudio;
+		scoreSource.Play();
 
 		score++;
 		scoreTextOut.text = "Score: " + score;
