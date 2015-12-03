@@ -5,6 +5,8 @@ public class ShoeController : MonoBehaviour {
 
 	public float shoeKillTime = 1.0f;
 
+	bool landedAlready = false;
+
 	// Use this for initialization
 	void Start () {
 
@@ -18,6 +20,10 @@ public class ShoeController : MonoBehaviour {
 	}
 
 	void OnCollisionEnter (Collision col){
+
+		if(landedAlready) { // don't kill player or pizza after landed
+			return;
+		}
 
 		if (col.gameObject.CompareTag("Player")){
 			GameController.instance.GameOver();
@@ -35,7 +41,7 @@ public class ShoeController : MonoBehaviour {
 
 		}
 		else{
-
+			landedAlready = true;
 			Invoke ("KillShoe", shoeKillTime);
 
 		}

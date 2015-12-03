@@ -7,6 +7,9 @@ public class GameController : MonoBehaviour {
 	public static GameController instance;
 
 	public PizzaRatController pizzaRat;
+	public Transform goalLocation; // to avoid pizza spawning atop it
+	public Transform holeLocation; // to move the hole when walls expand
+	private Vector3 lastpizzaPos; // also avoid pizza getting too near last place it was
 	public GameObject pizzaPrefab;
 	public GameObject subwayFloor;
 	public GameObject subwayWallN;
@@ -38,6 +41,7 @@ public class GameController : MonoBehaviour {
 		if (instance){
 			Destroy(instance);
 		}
+		lastpizzaPos = goalLocation.position;
 		scoreSource = GetComponent<AudioSource>();
 		scoreTextOut.text = "Score: 0";
 		levelTextOut.text = "Level: 1";
@@ -169,7 +173,11 @@ public class GameController : MonoBehaviour {
 
 		// push walls outward
 		float halfMotion = floorSizeIncrease * 0.5f;
-		subwayWallN.transform.position += new Vector3(0.0f, 0.0f, halfMotion);
+
+		Vector3 northWallPushPlusHoleAndGoal = new Vector3(0.0f, 0.0f, halfMotion);
+		goalLocation.transform.position += northWallPushPlusHoleAndGoal ;
+		holeLocation.transform.position += northWallPushPlusHoleAndGoal;
+		subwayWallN.transform.position += northWallPushPlusHoleAndGoal;
 		subwayWallS.transform.position += new Vector3(0.0f, 0.0f, -halfMotion);
 		subwayWallE.transform.position += new Vector3(halfMotion, 0.0f, 0.0f);
 		subwayWallW.transform.position += new Vector3(-halfMotion, 0.0f, 0.0f);;
@@ -207,6 +215,8 @@ public class GameController : MonoBehaviour {
 		bool acceptable = false;
 		Vector3 newPos = new Vector3();
 
+		int safetyQuit = 0;
+
 		while(!acceptable){
 
 			float randomX = Random.Range (-floorWidth, floorWidth);
@@ -214,14 +224,22 @@ public class GameController : MonoBehaviour {
 
 			newPos = new Vector3(randomX, pizzaRat.transform.position.y+0.5f,randomZ);
 
-			//check distance from pizzaRat
-			if (Vector3.Distance(newPos, pizzaRat.transform.position) >= pizzaPlacementRadius){
-				Debug.Log(Vector3.Distance(newPos, pizzaRat.transform.position));
+			//check distance from pizzaRat and the goal area
+			if (Vector3.Distance(newPos, pizzaRat.transform.position) >= pizzaPlacementRadius &&
+			    Vector3.Distance(newPos, goalLocation.position) >= pizzaPlacementRadius &&
+			    Vector3.Distance(newPos, lastpizzaPos) >= pizzaPlacementRadius){
+				// Debug.Log(Vector3.Distance(newPos, pizzaRat.transform.position));
 				acceptable = true;
 			}
 
+			if(safetyQuit > 50) { // to avoid infinite loop, if it's getting ugly losen up
+				safetyQuit = 0; // in case it's still stuck
+				pizzaPlacementRadius -= 5.0f; // lax up the exit condition's constraint
+			}
 
 		}
+
+		lastpizzaPos = newPos;
 	
 		return newPos;
 
@@ -229,9 +247,9 @@ public class GameController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetKeyDown(KeyCode.T)) {
+		/* if(Input.GetKeyDown(KeyCode.T)) {
 			StretchSubwayFloor();
-		}
+		} */
 	}
 
 }

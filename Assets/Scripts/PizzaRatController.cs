@@ -162,6 +162,7 @@ public class PizzaRatController : MonoBehaviour {
 	public void ungrabPizza(){
 
 		dragging = false;
+		yesPizzaAudio.Stop();
 		// Debug.Log ("Pizza unGrabbed!");
 
 		grabPoint.transform.parent = transform; // retract to mouse

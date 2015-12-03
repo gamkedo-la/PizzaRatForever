@@ -3,15 +3,23 @@ using System.Collections;
 
 public class CommuterController : MonoBehaviour {
 
+	public GameObject shoePrefabHeels;
+
 	public GameObject shoePrefabL;
 	public GameObject shoePrefabR;
+
 	public float shoeDropPauseTime = 2.0f;
-	
+
+	public enum ShoeKind {Boots,Heels,ShoeTypeCount};
+
+	private ShoeKind shoeType;
 
 	private bool leftFoot;
 
 	// Use this for initialization
 	void Start () {
+
+		shoeType = (ShoeKind)Random.Range(0,(int)(ShoeKind.ShoeTypeCount));
 
 		//Camera camera = GetComponent<Camera>();
 
@@ -60,8 +68,14 @@ public class CommuterController : MonoBehaviour {
 
 	void DropShoe (){
 
-		GameObject shoe = Instantiate((leftFoot ? shoePrefabL : shoePrefabR),
-		                              transform.position + transform.right * 1.5f * (leftFoot ? 1.0f : -1.0f), transform.rotation) as GameObject;
+		GameObject shoe;
+
+		if(shoeType == ShoeKind.Boots) {
+			shoe = (leftFoot ? shoePrefabL : shoePrefabR);
+		} else {
+			shoe = shoePrefabHeels;
+		}
+		Instantiate(shoe, transform.position + transform.right * 1.5f * (leftFoot ? 1.0f : -1.0f), transform.rotation);
 		leftFoot = !leftFoot; //switch feet
 
 	}
