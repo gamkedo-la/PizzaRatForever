@@ -55,6 +55,7 @@
      <Compile Include="Assets\Scripts\PizzaRatController.cs" />
      <Compile Include="Assets\Scripts\PizzaScoreable.cs" />
      <Compile Include="Assets\Scripts\ShoeController.cs" />
+     <Compile Include="Assets\Scripts\SubtleDrift.cs" />
      <Compile Include="Assets\Scripts\TitleFunctions.cs" />
      <None Include="Assets\Fonts\subway\readme.txt" />
  <Reference Include="UnityEngine.UI">
