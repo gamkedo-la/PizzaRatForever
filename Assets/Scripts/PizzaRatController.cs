@@ -18,7 +18,6 @@ public class PizzaRatController : MonoBehaviour {
 	public GameObject grabPoint;
 	private GameObject pizza = null;
 
-	private Rigidbody rb;
 	private Vector3 originalGrabPoint;
 	private bool dragging;
 
@@ -38,8 +37,6 @@ public class PizzaRatController : MonoBehaviour {
 	void Start () {
 
 		isDead = false;
-
-		rb = GetComponent<Rigidbody>(); 
 
 		dragging = false;
 		// get audio components
@@ -121,9 +118,6 @@ public class PizzaRatController : MonoBehaviour {
 		{
 			// Debug.Log ("pizza not located!");
 		}
-			
-
-		//pizza.GetComponent<Rigidbody>().AddForce(rb.velocity);
 
 	}
 

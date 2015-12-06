@@ -47,7 +47,7 @@ public class CommuterMakerController : MonoBehaviour {
 
 			type = Random.Range (0, (commuter.Length));
 			//commuter = commuterType[type];
-			GameObject newCommuter = Instantiate(commuter[type], transform.position, transform.rotation) as GameObject;
+			Instantiate(commuter[type], transform.position, transform.rotation);
 
 		}
 	}
